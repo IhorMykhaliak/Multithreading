@@ -25,7 +25,7 @@ namespace M_Multithreading
             tbxUrls.Text = string.Join(Environment.NewLine, urls);
         }
 
-        private void btnStart_Click(object sender, EventArgs e)
+        private async void btnStart_Click(object sender, EventArgs e)
         {
             if (processing)
             {
@@ -36,12 +36,35 @@ namespace M_Multithreading
             else
             {
                 processing = true;
+                rtbStatus.Text = "";
                 btnStart.Text = "Stop";
                 foreach (var url in urls)
                 {
                     //var t = new Task(() => GetData(url), tokenSource.Token);
                     //t.Start();
+
                     GetDataAsync(url, tokenSource.Token);
+
+                    //try
+                    //{
+                    //    rtbStatus.Text += "\nProcessing " + url;
+
+                    //    var response = await client.GetAsync(url, tokenSource.Token);
+
+                    //    rtbStatus.Text += "\nParsing response from " + url;
+
+                    //    var result = response.Content.ReadAsStringAsync();
+
+                    //    ParseResult(result.Result);
+                    //}
+                    //catch (TaskCanceledException)
+                    //{
+                    //    rtbStatus.Text += "\nTask was cancaleld";
+                    //}
+                    //finally
+                    //{
+                    //    btnStart.Text = "Start";
+                    //}
                 }
             }
         }
